@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SchoolSecret | Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --black: #0A0A0A;
+            --dark-grey: #1E1E1E;
+            --grey: #2D2D2D;
+            --red: #FF3B3B;
+            --white: #FFFFFF;
+            --gradient: linear-gradient(135deg, #FF3B3B 0%, #FF6B6B 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 5%;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--grey);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: rotate(15deg);
+        }
+
+        .site-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 5%;
+            animation: fadeIn 1s ease;
+        }
+
+        .profile-card {
+            width: 100%;
+            max-width: 1000px;
+            background: var(--dark-grey);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .profile-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+        }
+
+        .profile-content {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .profile-pic-container {
+            position: relative;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--red);
+            box-shadow: 0 0 20px rgba(255, 59, 59, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05);
+        }
+
+        .status-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: var(--red);
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 15px rgba(255, 59, 59, 0.3);
+            z-index: 2;
+            animation: pulse 2s infinite;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-username {
+            color: var(--red);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-bio {
+            color: #AAA;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #AAA;
+        }
+
+        .super-power-btn {
+            background: var(--gradient);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 59, 59, 0.3);
+        }
+
+        .super-power-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 59, 59, 0.4);
+        }
+
+        .super-power-btn.active {
+            animation: glow 1.5s infinite alternate;
+        }
+
+        /* Posts Grid */
+        .posts-section {
+            padding: 2rem 5%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .post-card {
+            background: var(--dark-grey);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .post-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .post-content {
+            padding: 1rem;
+        }
+
+        .post-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: #AAA;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .action-btn:hover {
+            color: var(--red);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(255, 59, 59, 0.5); }
+            to { box-shadow: 0 0 20px rgba(255, 59, 59, 0.8); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-stats {
+                justify-content: center;
+            }
+
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-container">
+            <img src="https://i.ibb.co/m5zZpzyx/a83e2b92006d3e40485f16cfe53677c4.png" alt="Logo" class="logo">
+            <h1 class="site-name">SchoolSecret</h1>
+        </div>
+    </header>
+
+    <!-- Profile Section -->
+    <section class="profile-section">
+        <div class="profile-card">
+            <div class="profile-content">
+                <div class="profile-pic-container">
+                    <img src="https://i.ibb.co/HDtm7dcP/IMG-20250415-205614.png" alt="Profile Picture" class="profile-pic">
+                    <button class="status-button" id="statusButton">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="profile-info">
+                    <h1 class="profile-name">Alex Carter</h1>
+                    <p class="profile-username">@secret_student_42</p>
+                    <p class="profile-bio">
+                        🎓 High School Wizard | 🔮 Secret Magic Enthusiast | 📚 Manga & Anime Lover  
+                        "What happens in SchoolSecret, stays in SchoolSecret." 😉
+                    </p>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <div class="stat-value">1.2K</div>
+                            <div class="stat-label">Followers</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">356</div>
+                            <div class="stat-label">Following</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">78</div>
+                            <div class="stat-label">Posts</div>
+                        </div>
+                    </div>
+                    <button class="super-power-btn" id="superPowerBtn">
+                        <i class="fas fa-bolt"></i>
+                        Super Power Mode
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Posts Section -->
+    <section class="posts-section">
+        <h2 class="section-title">
+            <i class="fas fa-images" style="color: var(--red);"></i>
+            My Secret Posts
+        </h2>
+        <div class="posts-grid">
+            <!-- Post 1 -->
+            <div class="post-card">
+                <img src="https://picsum.photos/400/300?random=1" alt="Post" class="post-image">
+                <div class="post-content">
+                    <h3 class="post-title">Magical Dorm Party 🎉</h3>
+                    <div class="post-actions">
+                        <button class="action-btn like-btn">
+                            <i class="far fa-heart"></i> 245
+                        </button>
+                        <button class="action-btn">
+                            <i class="far fa-comment"></i> 32
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-share"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Post 2 -->
+            <div class="post-card">
+                <img src="https://picsum.photos/400/300?random=2" alt="Post" class="post-image">
+                <div class="post-content">
+                    <h3 class="post-title">Secret Study Spot 📚</h3>
+                    <div class="post-actions">
+                        <button class="action-btn like-btn">
+                            <i class="far fa-heart"></i> 189
+                        </button>
+                        <button class="action-btn">
+                            <i class="far fa-comment"></i> 21
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-share"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Post 3 -->
+            <div class="post-card">
+                <img src="https://picsum.photos/400/300?random=3" alt="Post" class="post-image">
+                <div class="post-content">
+                    <h3 class="post-title">Anime Club Meetup 🎭</h3>
+                    <div class="post-actions">
+                        <button class="action-btn like-btn">
+                            <i class="far fa-heart"></i> 312
+                        </button>
+                        <button class="action-btn">
+                            <i class="far fa-comment"></i> 45
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-share"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Status Button Animation
+        const statusButton = document.getElementById('statusButton');
+        statusButton.addEventListener('click', () => {
+            alert("🎤 Update your secret status!");
+        });
+
+        // Super Power Mode Toggle
+        const superPowerBtn = document.getElementById('superPowerBtn');
+        superPowerBtn.addEventListener('click', () => {
+            superPowerBtn.classList.toggle('active');
+            if (superPowerBtn.classList.contains('active')) {
+                document.body.style.background = "linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)), url('https://i.gifer.com/7VE.gif')";
+                document.body.style.backgroundSize = "cover";
+                alert("⚡ Super Power Mode Activated! Secret abilities unlocked!");
+            } else {
+                document.body.style.background = "var(--black)";
+            }
+        });
+
+        // Like Button Functionality
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                icon.classList.toggle('far');
+                icon.classList.toggle('fas');
+                if (icon.classList.contains('fas')) {
+                    this.style.color = "var(--red)";
+                    let likes = parseInt(this.textContent.trim());
+                    this.innerHTML = `<i class="fas fa-heart"></i> ${likes + 1}`;
+                } else {
+                    this.style.color = "#AAA";
+                    let likes = parseInt(this.textContent.trim());
+                    this.innerHTML = `<i class="far fa-heart"></i> ${likes - 1}`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

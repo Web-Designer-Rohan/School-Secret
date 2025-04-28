@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SchoolSecret Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --black: #0A0A0A;
+            --dark-grey: #1A1A1A;
+            --grey: #2D2D2D;
+            --red: #FF3B3B;
+            --white: #FFFFFF;
+            --gradient: linear-gradient(135deg, var(--red) 0%, #FF6B6B 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(255,59,59,0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255,59,59,0.05) 0%, transparent 20%),
+                var(--black);
+            color: var(--white);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Particle Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--red);
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 4rem 0 2rem;
+            position: relative;
+        }
+
+        .logo {
+            width: 90px;
+            height: 90px;
+            margin-bottom: 1.5rem;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            filter: drop-shadow(0 0 15px rgba(255,59,59,0.5));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .site-name {
+            font-size: 3rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 5px 20px rgba(255,59,59,0.3);
+        }
+
+        /* Fun Note */
+        .fun-note {
+            background: rgba(255,59,59,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,59,59,0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+            text-align: center;
+            animation: pulseGlow 4s infinite alternate;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fun-note::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255,59,59,0.1) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(255,59,59,0.1) 0%, transparent 30%);
+            z-index: -1;
+        }
+
+        .fun-note h3 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--red);
+            font-size: 1.2rem;
+        }
+
+        /* Navigation Grid */
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            padding: 2rem;
+            max-width: 1500px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        .nav-card {
+            background: rgba(45,45,45,0.5);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transform-style: preserve-3d;
+        }
+
+        /* Neon Border Effect */
+        .nav-card::after {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 22px;
+            background: var(--gradient);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        /* Glow Backdrop */
+        .nav-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255,59,59,0.2) 0%, transparent 70%);
+            transform: scale(0.8);
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+            z-index: -1;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-10px) scale(1.03) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+
+        .nav-card:hover::after {
+            opacity: 0.7;
+            box-shadow: 0 0 20px rgba(255,59,59,0.5);
+        }
+
+        .nav-card:hover::before {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .nav-card:active {
+            transform: translateY(-5px) scale(0.98);
+        }
+
+        .nav-card:active::before {
+            transform: scale(1.2);
+            opacity: 0.8;
+        }
+
+        .nav-icon {
+            font-size: 2.8rem;
+            color: var(--red);
+            margin-bottom: 1.5rem;
+            transition: all 0.5s ease;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 10px rgba(255,59,59,0.3);
+        }
+
+        .nav-card:hover .nav-icon {
+            transform: scale(1.2) translateY(-5px);
+            filter: drop-shadow(0 0 15px rgba(255,59,59,0.7));
+        }
+
+        .nav-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            font-weight: 600;
+        }
+
+        .nav-desc {
+            font-size: 0.95rem;
+            color: #AAA;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, margin-top 0.5s ease;
+            line-height: 1.6;
+        }
+
+        .nav-card:hover .nav-desc {
+            max-height: 100px;
+            margin-top: 1.5rem;
+        }
+
+        /* Animations */
+        @keyframes pulseGlow {
+            0% { 
+                box-shadow: 0 0 20px rgba(255,59,59,0.1);
+                border-color: rgba(255,59,59,0.3);
+            }
+            100% { 
+                box-shadow: 0 0 40px rgba(255,59,59,0.2);
+                border-color: rgba(255,59,59,0.5);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(0) translateX(0); }
+            100% { transform: translateY(-100vh) translateX(20px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 3rem 0 1.5rem;
+            }
+            
+            .site-name {
+                font-size: 2.5rem;
+            }
+            
+            .logo {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .nav-grid {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+                gap: 2rem;
+            }
+            
+            .nav-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
+
+    <div class="header">
+        <img src="https://i.ibb.co/m5zZpzyx/a83e2b92006d3e40485f16cfe53677c4.png" alt="Logo" class="logo">
+        <h1 class="site-name">SchoolSecret</h1>
+        <p>Your exclusive digital portal</p>
+    </div>
+
+    <!-- Fun Note -->
+    <div class="fun-note">
+        <h3>🚨 Top Secret!</h3>
+        <p>Remember - what happens in SchoolSecret stays in SchoolSecret. Keep your activities hidden from prying eyes!</p>
+    </div>
+
+    <!-- Navigation Grid -->
+    <div class="nav-grid">
+        <!-- Home -->
+        <div class="nav-card" onclick="navigateTo('home.html')">
+            <div class="nav-icon"><i class="fas fa-home"></i></div>
+            <h3 class="nav-title">Home</h3>
+            <div class="nav-desc">Central hub with all secret features</div>
+        </div>
+
+        <!-- Login -->
+        <div class="nav-card" onclick="navigateTo('login.html')">
+            <div class="nav-icon"><i class="fas fa-sign-in-alt"></i></div>
+            <h3 class="nav-title">Login</h3>
+            <div class="nav-desc">Secure gateway to your private world</div>
+        </div>
+
+        <!-- Manga -->
+        <div class="nav-card" onclick="navigateTo('manga.html')">
+            <div class="nav-icon"><i class="fas fa-book-open"></i></div>
+            <h3 class="nav-title">Manga</h3>
+            <div class="nav-desc">Hidden manga collection for students</div>
+        </div>
+
+        <!-- Games -->
+        <div class="nav-card" onclick="navigateTo('games.html')">
+            <div class="nav-icon"><i class="fas fa-gamepad"></i></div>
+            <h3 class="nav-title">Games</h3>
+            <div class="nav-desc">Secret gaming zone during breaks</div>
+        </div>
+
+        <!-- Movies -->
+        <div class="nav-card" onclick="navigateTo('movies.html')">
+            <div class="nav-icon"><i class="fas fa-film"></i></div>
+            <h3 class="nav-title">Movies</h3>
+            <div class="nav-desc">Private movie streaming portal</div>
+        </div>
+
+        <!-- Courses -->
+        <div class="nav-card" onclick="navigateTo('courses.html')">
+            <div class="nav-icon"><i class="fas fa-graduation-cap"></i></div>
+            <h3 class="nav-title">Courses</h3>
+            <div class="nav-desc">Learn tech skills undercover</div>
+        </div>
+
+        <!-- Anime -->
+        <div class="nav-card" onclick="navigateTo('anime.html')">
+            <div class="nav-icon"><i class="fas fa-dragon"></i></div>
+            <h3 class="nav-title">Anime</h3>
+            <div class="nav-desc">Exclusive anime streaming</div>
+        </div>
+
+        <!-- Chats -->
+        <div class="nav-card" onclick="navigateTo('chats.html')">
+            <div class="nav-icon"><i class="fas fa-comments"></i></div>
+            <h3 class="nav-title">All Chats</h3>
+            <div class="nav-desc">Encrypted conversations</div>
+        </div>
+
+        <!-- AI Chat -->
+        <div class="nav-card" onclick="navigateTo('ai-chat.html')">
+            <div class="nav-icon"><i class="fas fa-robot"></i></div>
+            <h3 class="nav-title">AI Chat</h3>
+            <div class="nav-desc">Smart assistant for secret help</div>
+        </div>
+
+        <!-- Profile -->
+        <div class="nav-card" onclick="navigateTo('profile.html')">
+            <div class="nav-icon"><i class="fas fa-user-secret"></i></div>
+            <h3 class="nav-title">Profile</h3>
+            <div class="nav-desc">Your anonymous identity</div>
+        </div>
+
+        <!-- Gallery -->
+        <div class="nav-card" onclick="navigateTo('gallery.html')">
+            <div class="nav-icon"><i class="fas fa-images"></i></div>
+            <h3 class="nav-title">Gallery</h3>
+            <div class="nav-desc">Shared secrets from users</div>
+        </div>
+
+        <!-- Posting -->
+        <div class="nav-card" onclick="navigateTo('post.html')">
+            <div class="nav-icon"><i class="fas fa-plus-circle"></i></div>
+            <h3 class="nav-title">Create Post</h3>
+            <div class="nav-desc">Share your hidden moments</div>
+        </div>
+
+        <!-- Video Calls -->
+        <div class="nav-card" onclick="navigateTo('video-calls.html')">
+            <div class="nav-icon"><i class="fas fa-video"></i></div>
+            <h3 class="nav-title">Video Calls</h3>
+            <div class="nav-desc">Secure group video chats</div>
+        </div>
+    </div>
+    
+    <script>
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 30;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Random position
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            
+            // Random size
+            const size = Math.random() * 3 + 1;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            // Random opacity
+            particle.style.opacity = Math.random() * 0.5 + 0.1;
+            
+            // Animation
+            const duration = Math.random() * 20 + 10;
+            particle.style.animation = `particleFloat ${duration}s linear infinite`;
+            particle.style.animationDelay = `${Math.random() * 5}s`;
+            
+            particlesContainer.appendChild(particle);
+        }
+
+        // Navigation function with ripple effect
+        function navigateTo(url) {
+            // Ripple effect would be handled by CSS pseudo-elements
+            setTimeout(() => {
+                window.location.href = url;
+            }, 300);
+        }
+
+        // Enhanced card click effect
+        document.querySelectorAll('.nav-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'translateY(-5px) scale(0.98)';
+                this.style.boxShadow = '0 25px 60px rgba(255,59,59,0.3)';
+                
+                setTimeout(() => {
+                    this.style.transform = 'translateY(-10px) scale(1.03)';
+                }, 200);
+            });
+        });
+
+        // Mouse move parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.nav-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const angleX = (y - centerY) / 20;
+                const angleY = (centerX - x) / 20;
+                
+                card.style.transform = `
+                    translateY(-10px) 
+                    scale(1.03) 
+                    rotateX(${angleX}deg) 
+                    rotateY(${angleY}deg)
+                `;
+            });
+        });
+    </script>
+</body>
+</html>

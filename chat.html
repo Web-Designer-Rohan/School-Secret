@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Chat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0A0A0A;
+            --grey: #2D2D2D;
+            --red: #FF3B3B;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--black);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--black);
+        }
+
+        .chat-header {
+            padding: 1.5rem;
+            background: var(--grey);
+            color: var(--white);
+            border-bottom: 2px solid var(--red);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 1rem 1.5rem;
+            border-radius: 1.5rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .received {
+            background: var(--grey);
+            color: var(--white);
+            align-self: flex-start;
+            border-bottom-left-radius: 0.5rem;
+        }
+
+        .sent {
+            background: var(--red);
+            color: var(--white);
+            align-self: flex-end;
+            border-bottom-right-radius: 0.5rem;
+        }
+
+        .message-time {
+            display: block;
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+        }
+
+        .chat-input {
+            padding: 1.5rem;
+            background: var(--grey);
+            display: flex;
+            gap: 1rem;
+            border-top: 2px solid var(--red);
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 2rem;
+            background: var(--black);
+            color: var(--white);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .send-button {
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 2rem;
+            background: var(--red);
+            color: var(--white);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .send-button:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                max-width: 100%;
+            }
+
+            .message {
+                max-width: 85%;
+            }
+
+            .chat-input {
+                padding: 1rem;
+            }
+
+            .message-input {
+                padding: 0.8rem 1.2rem;
+            }
+
+            .send-button {
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Secret Chat</h2>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <!-- Sample Messages -->
+            <div class="message received">
+                <p>Hey! What's the secret plan for tomorrow? 😎</p>
+                <span class="message-time">10:45 AM</span>
+            </div>
+            
+            <div class="message sent">
+                <p>Meet me at the old library during lunch break! 📚</p>
+                <span class="message-time">10:46 AM</span>
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <input type="text" class="message-input" placeholder="Type your secret message..." id="messageInput">
+            <button class="send-button" id="sendButton">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+
+        function addMessage(text, isSent) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isSent ? 'sent' : 'received'}`;
+            
+            const timeString = new Date().toLocaleTimeString([], { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+
+            messageDiv.innerHTML = `
+                <p>${text}</p>
+                <span class="message-time">${timeString}</span>
+            `;
+
+            chatMessages.appendChild(messageDiv);
+            messageInput.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        sendButton.addEventListener('click', () => {
+            const message = messageInput.value.trim();
+            if(message) {
+                addMessage(message, true);
+            }
+        });
+
+        messageInput.addEventListener('keypress', (e) => {
+            if(e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                const message = messageInput.value.trim();
+                if(message) {
+                    addMessage(message, true);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

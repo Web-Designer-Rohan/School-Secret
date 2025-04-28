@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SchoolSecret - Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --black: #0A0A0A;
+            --grey: #2D2D2D;
+            --red: #FF3B3B;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem 0;
+            position: relative;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: rotate(15deg);
+        }
+
+        .site-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--white) 60%, var(--red) 40%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -1px;
+            position: relative;
+        }
+
+        .site-name::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, var(--white) 60%, var(--red) 40%);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .site-name:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Rest of your existing CSS remains the same */
+        .profile-section {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease;
+        }
+
+        /* ... (keep all your existing CSS styles below) ... */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <img src="https://i.ibb.co/m5zZpzyx/a83e2b92006d3e40485f16cfe53677c4.png" alt="SchoolSecret Logo" class="logo">
+                <h1 class="site-name">SchoolSecret</h1>
+            </div>
+        </header>
+
+        <!-- Rest of your HTML content remains the same -->
+        <section class="profile-section">
+            <div class="profile-left">
+                <img src="https://i.ibb.co/HDtm7dcP/IMG-20250415-205614.png" alt="Profile Picture" class="profile-pic">
+                <button class="status-button">
+                    <i class="fas fa-plus"></i>
+                    Add Status
+                </button>
+                <button class="super-power-btn">
+                    ⚡ Super Power Mode
+                </button>
+            </div>
+
+            <div class="profile-right">
+                <div class="profile-header">
+                    <div>
+                        <h1 class="user-name">Alex Carter</h1>
+                        <p class="user-id">@secret_student_42</p>
+                    </div>
+                    <button class="edit-btn">
+                        <i class="fas fa-edit"></i>
+                        Edit Profile
+                    </button>
+                </div>
+
+                <div class="posts-grid">
+                    <!-- Sample Posts -->
+                    <div class="post-card">
+                        <img src="https://picsum.photos/400/300" alt="Post" class="post-image">
+                        <div class="post-content">
+                            <h3 class="post-title">Magical Campus Adventure 🌟</h3>
+                            <div class="post-interactions">
+                                <span><i class="fas fa-heart"></i> 245</span>
+                                <span><i class="fas fa-comment"></i> 45</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="post-card">
+                        <img src="https://picsum.photos/401/300" alt="Post" class="post-image">
+                        <div class="post-content">
+                            <h3 class="post-title">Secret Study Session Success! 📚</h3>
+                            <div class="post-interactions">
+                                <span><i class="fas fa-heart"></i> 189</span>
+                                <span><i class="fas fa-comment"></i> 32</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Header animation
+        const siteName = document.querySelector('.site-name');
+        siteName.addEventListener('mouseenter', () => {
+            siteName.style.background = 'linear-gradient(to right, var(--red) 60%, var(--white) 40%)';
+            siteName.style.webkitBackgroundClip = 'text';
+        });
+        
+        siteName.addEventListener('mouseleave', () => {
+            siteName.style.background = 'linear-gradient(to right, var(--white) 60%, var(--red) 40%)';
+            siteName.style.webkitBackgroundClip = 'text';
+        });
+
+        // Rest of your existing JavaScript
+        const statusButton = document.querySelector('.status-button');
+        let isPulsing = false;
+
+        statusButton.addEventListener('mouseenter', () => {
+            if (!isPulsing) {
+                statusButton.style.animation = 'pulse 1.5s infinite';
+                isPulsing = true;
+            }
+        });
+
+        statusButton.addEventListener('mouseleave', () => {
+            statusButton.style.animation = '';
+            isPulsing = false;
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
